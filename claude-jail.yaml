@@ -1,0 +1,20 @@
+vmType: vz
+os: Linux
+arch: aarch64
+images:
+  - location: "https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-arm64.qcow2"
+    arch: aarch64
+cpus: 2
+memory: "4GiB"
+disk: "50GiB"
+ssh:
+  localPort: 0
+  loadDotSSHPubKeys: true
+
+# Ports 5xxx will be visible to the host
+portForwards:
+  - guestPortRange: [5000, 5999]
+    hostPortRange: [5000, 5999]
+
+# overrides Lima's default of mounting $HOME read-only
+mounts: []
