@@ -9,5 +9,8 @@ pkgs.mkShell {
     cacert
     curl
     jq
+    qemu
+    vagrant
   ];
+  QEMU_PATH = pkgs.qemu;
 }
