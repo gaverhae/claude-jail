@@ -50,12 +50,5 @@ provision:
       fi
       sudo chsh -s "$BREW_ZSH" "$USER"
 
-      # Revoke passwordless sudo now that setup is complete
-      sudo grep -v "NOPASSWD" /etc/sudoers | sudo tee /etc/sudoers.tmp
-      sudo visudo -c -f /etc/sudoers.tmp && sudo mv /etc/sudoers.tmp /etc/sudoers
-      # Generate a random password and set it
-      SUDO_PASSWORD=$(openssl rand -base64 16)
-      echo "$USER:$SUDO_PASSWORD" | sudo chpasswd
-      echo "======================================"
-      echo "sudo password for $USER: $SUDO_PASSWORD"
-      echo "======================================"
+      # Revoke sudo access now that we're done with it
+      sudo deluser "$USER" sudo
