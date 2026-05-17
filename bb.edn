@@ -1,6 +1,6 @@
 {:tasks
  {up   {:doc "Start the claude-jail Lima VM"
-		:task (shell "limactl start --name=claude-jail claude-jail.yaml")}
+		:task (shell "limactl start --tty=false --name=claude-jail claude-jail.yaml")}
   down {:doc "Stop the claude-jail Lima VM"
 		:task (shell "limactl stop claude-jail")}
   ssh  {:doc "Shell into the claude-jail Lima VM"
