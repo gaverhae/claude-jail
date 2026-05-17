@@ -10,5 +10,6 @@ pkgs.mkShell {
     curl
     jq
     lima
+    openssh
   ];
 }

@@ -4,4 +4,10 @@
   down {:doc "Stop the claude-jail Lima VM"
 		:task (shell "limactl delete -f claude-jail")}
   ssh  {:doc "Shell into the claude-jail Lima VM"
-		:task (shell "limactl shell claude-jail")}}}
+		:task (shell "limactl shell claude-jail")}
+  key {:doc "Generate a new SSH key. Will overwrite an existing one."
+       :task (do
+               (shell "rm -r ssh")
+               (shell "mkdir -p ssh")
+               (shell "ssh-keygen -t ed25519 -C claude-code -f ssh/key -N ''")
+               (shell "cat ssh/key.pub"))}}}
