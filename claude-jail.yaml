@@ -18,3 +18,44 @@ portForwards:
 
 # overrides Lima's default of mounting $HOME read-only
 mounts: []
+
+# default software I want
+provision:
+  - mode: user
+    script: |
+      #!/usr/bin/env bash
+      set -euo pipefail
+
+      # Install Nix (single-user)
+      curl -L https://nixos.org/nix/install | sh -s -- --no-daemon
+
+      # Source nix for the rest of this script
+      . "$HOME/.nix-profile/etc/profile.d/nix.sh"
+
+      # Install Homebrew
+      sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
+      sudo DEBIAN_FRONTEND=noninteractive apt-get install -y git
+      NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+      # Add Homebrew to PATH for the rest of this script
+      eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+      # Install zsh and direnv via Homebrew
+      brew install zsh direnv
+
+      # Change default shell to Homebrew zsh
+      BREW_ZSH="$(brew --prefix)/bin/zsh"
+      if ! grep -qF "$BREW_ZSH" /etc/shells; then
+        echo "$BREW_ZSH" | sudo tee -a /etc/shells
+      fi
+      sudo chsh -s "$BREW_ZSH" "$USER"
+
+      # Revoke passwordless sudo now that setup is complete
+      sudo grep -v "NOPASSWD" /etc/sudoers | sudo tee /etc/sudoers.tmp
+      sudo visudo -c -f /etc/sudoers.tmp && sudo mv /etc/sudoers.tmp /etc/sudoers
+      # Generate a random password and set it
+      SUDO_PASSWORD=$(openssl rand -base64 16)
+      echo "$USER:$SUDO_PASSWORD" | sudo chpasswd
+      echo "======================================"
+      echo "sudo password for $USER: $SUDO_PASSWORD"
+      echo "======================================"
