@@ -50,6 +50,10 @@ provision:
       fi
       sudo chsh -s "$BREW_ZSH" "$USER"
 
+      # allow login shells (user can run `su -l user`)
+      # without this, chsh doesn't seem to "take" and I end up with Bash anyway
+      sudo sed -i "/pam_rootok.so/a auth sufficient pam_succeed_if.so user=$USER ruser=$USER" /etc/pam.d/su
+
       # install my favourite locale
       sudo locale-gen en_US.UTF-8
 

@@ -18,7 +18,7 @@
 (defn ssh
   "Shell into the claude-jail Lima VM."
   []
-  (tasks/shell "limactl shell claude-jail /home/linuxbrew/.linuxbrew/bin/zsh"))
+  (tasks/shell "limactl shell claude-jail su -l gary"))
 
 (defn rotate
   "Generate a new SSH key. Will overwrite an existing one."
