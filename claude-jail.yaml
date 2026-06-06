@@ -52,3 +52,16 @@ provision:
 
       # Revoke sudo access now that we're done with it
       sudo rm /etc/sudoers.d/90-cloud-init-users
+
+      # add GitHub SSH key
+      ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+      # install my environment
+      (
+      cd $(mktemp -d)
+      git clone https://github.com/gaverhae/dotfiles.git
+      cd dotfiles
+      git checkout install
+      direnv allow
+      direnv exec . bin/go install
+      ) > /tmp/dotfiles-install-log 2>&1
