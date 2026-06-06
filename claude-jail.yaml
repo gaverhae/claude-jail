@@ -51,4 +51,4 @@ provision:
       sudo chsh -s "$BREW_ZSH" "$USER"
 
       # Revoke sudo access now that we're done with it
-      sudo deluser "$USER" sudo
+      sudo rm /etc/sudoers.d/90-cloud-init-users
