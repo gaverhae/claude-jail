@@ -50,6 +50,9 @@ provision:
       fi
       sudo chsh -s "$BREW_ZSH" "$USER"
 
+      # install my favourite locale
+      sudo locale-gen en_US.UTF-8
+
       # Revoke sudo access now that we're done with it
       sudo rm /etc/sudoers.d/90-cloud-init-users
 
