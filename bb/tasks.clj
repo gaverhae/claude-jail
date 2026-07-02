@@ -8,7 +8,8 @@
   (tasks/shell "limactl start --tty=false --name=claude-jail claude-jail.yaml")
   (-> (p/process ["cat" "./ssh/key"])
       (p/process ["limactl" "shell" "claude-jail" "bash" "-c"
-                  "cat > ~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519"])))
+                  "cat > ~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519"])
+      deref))
 
 (defn down
   "Destroy the claude-jail Lima VM."
