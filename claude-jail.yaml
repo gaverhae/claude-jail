@@ -70,7 +70,6 @@ provision:
       cd $(mktemp -d)
       git clone https://github.com/gaverhae/dotfiles.git
       cd dotfiles
-      git checkout install
       direnv allow
       direnv exec . bin/go install
       ) > /tmp/dotfiles-install-log 2>&1
