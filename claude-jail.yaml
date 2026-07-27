@@ -52,7 +52,7 @@ provision:
 
       # allow login shells (user can run `su -l user`)
       # without this, chsh doesn't seem to "take" and I end up with Bash anyway
-      sudo sed -i "/pam_rootok.so/a auth sufficient pam_succeed_if.so user=$USER ruser=$USER" /etc/pam.d/su
+      sudo sed -i "/pam_rootok.so/a auth sufficient pam_succeed_if.so user = $USER ruser = $USER" /etc/pam.d/su
 
       # install my favourite locale
       sudo sed -i 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
