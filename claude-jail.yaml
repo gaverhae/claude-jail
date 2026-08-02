@@ -11,10 +11,10 @@ ssh:
   localPort: 0
   loadDotSSHPubKeys: true
 
-# Ports 50xx will be visible to the host
+# Guest ports 3000 through 4000 are available on a separate host-loopback address.
 portForwards:
-  - guestPortRange: [5000, 5099]
-    hostPortRange: [5000, 5099]
+  - guestPortRange: [3000, 4000]
+    hostIP: "127.0.0.2"
 
 # overrides Lima's default of mounting $HOME read-only
 mounts: []
