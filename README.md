@@ -14,6 +14,11 @@ Install [direnv] and [nix], `direnv allow` the project, then:
 bb tasks
 ```
 
+`bb up` checks that the `127.0.0.2` alias exists on the host loopback interface
+before starting Lima. If it is missing, the task stops and prints the sudo
+command needed to create it. Guest TCP ports 1024 through 65535 are then
+available at the same port on `127.0.0.2`; other listeners are not forwarded.
+
 [direnv]: https://direnv.net
 [nix]: https://nixos.org
 

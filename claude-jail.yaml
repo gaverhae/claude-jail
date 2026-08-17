@@ -11,10 +11,17 @@ ssh:
   localPort: 0
   loadDotSSHPubKeys: true
 
-# Guest ports 3000 through 4000 are available on a separate host-loopback address.
+# Dynamically forward unprivileged guest TCP listeners to a separate host-loopback
+# address. Ignore everything else instead of falling through to Lima's default
+# forwarding rule for 127.0.0.1.
 portForwards:
-  - guestPortRange: [3000, 4000]
+  - guestPortRange: [1024, 65535]
     hostIP: "127.0.0.2"
+    proto: tcp
+  - guestIP: "0.0.0.0"
+    guestIPMustBeZero: false
+    proto: any
+    ignore: true
 
 # overrides Lima's default of mounting $HOME read-only
 mounts: []
